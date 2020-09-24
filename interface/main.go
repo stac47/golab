@@ -12,11 +12,11 @@ type User struct {
 	age  int
 }
 
-func (user User) Surname() string {
+func (user *User) Surname() string {
 	return user.name
 }
 
-func (user User) Age() int {
+func (user *User) Age() int {
 	return user.age
 }
 
@@ -35,15 +35,17 @@ func Display(user UserInterface) {
 	fmt.Printf("%s (%d)\n", user.Surname(), user.Age())
 }
 
-func Display2(user *UserInterface) {
-	fmt.Printf("%s (%d)\n", (*user).Surname(), (*user).Age())
+type Group struct {
+	User1 User
+	User2 User
 }
 
 func main() {
 	user1 := User{"Balibalo", 7}
 	user2 := FakeUser{}
-	Display(user1)
+	Display(&user1)
 	Display(user2)
-	// Display2(&user1)
-	// Display2(&user2)
+
+	g := Group{user1, &user2}
+	Display(g.User1)
 }
